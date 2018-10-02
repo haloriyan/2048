@@ -104,6 +104,11 @@ HTMLActuator.prototype.positionClass = function (position) {
 };
 
 HTMLActuator.prototype.updateScore = function (score) {
+  pos('./back/updateSkor.php', 'skor='+score, () => {
+    ambil('./back/loadSkor.php', (res) => {
+      $('#loadLeaderBoard').tulis(res)
+    })
+  })
   this.clearContainer(this.scoreContainer);
 
   var difference = score - this.score;

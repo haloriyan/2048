@@ -1,3 +1,8 @@
+<?php
+include 'back/2048.php';
+
+$game->sesi();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +19,37 @@
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>
+    .leaderBoard {
+      position: absolute;
+      top: 273px;right: 5%;
+      width: 35%;
+      background-color: #fff;
+      border-radius: 6px;
+    }
+    .leaderBoard h3 {
+      background-color: #8d7d63;
+      margin: 0;
+      line-height: 60px;
+      color: #fff;
+      padding: 1px 25px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+    .leaderBoard li {
+      list-style: none;
+      line-height: 55px;
+      padding: 1px 25px;
+    }
+    .leaderBoard li:nth-child(even) {
+      background: rgba(141,125,99, 0.7);
+      color: #fff;
+    }
+    .leaderBoard .skor {
+      float: right;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -31,7 +66,13 @@
       <a class="restart-button">New Game</a>
     </div>
 
-    <div class="game-container">
+    <div class="leaderBoard">
+      <!-- #8d7d63 -->
+      <h3>Leaderboard</h3>
+      <div id="loadLeaderBoard"></div>
+    </div>
+
+    <div class="game-container" style="display: inline-block;margin-left: -50%;">
       <div class="game-message">
         <p></p>
         <div class="lower">
@@ -95,5 +136,16 @@
   <script src="js/local_storage_manager.js"></script>
   <script src="js/game_manager.js"></script>
   <script src="js/application.js"></script>
+  <script src="js/embo.js"></script>
+  <script>
+    function loadSkor() {
+      ambil('./back/loadSkor.php', (res) => {
+        $('#loadLeaderBoard').tulis(res)
+      })
+    }
+    setInterval(function() {
+      loadSkor()
+    }, 1000)
+  </script>
 </body>
 </html>
